@@ -742,11 +742,6 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 </div><!-- /app -->
 
 <script>
-/* ── 모바일 인쇄 ── */
-function mobilePrint(){
-  window.print();
-}
-
 /* ── 카카오 주소 검색 ── */
 function openAddrSearch(){
   if(typeof daum === 'undefined' || typeof daum.Postcode === 'undefined'){
@@ -2286,7 +2281,7 @@ function printPrescription(){
   }
 
   var inner=
-    '<div class="p-btn-row" style="display:flex;gap:10px;margin-bottom:16px">'    +'<button class="p-close-btn" style="margin:0;flex:1" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;background:var(--green)" onclick="mobilePrint()">🖨️ 인쇄하기</button>'    +'</div>'
+    '<div class="p-btn-row" style="display:flex;gap:10px;margin-bottom:16px">'    +'<button class="p-close-btn" style="margin:0;flex:1" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;background:var(--green)" onclick="window.print()">🖨️ 인쇄하기</button>'    +'</div>'
     +'<div class="p-hdr">'
       +'<div><div class="p-title">토양 비료 사용처방서</div>'
         +'<div class="p-sub">남해화학 정밀 시비처방 프로그램  ·  농촌진흥청 3차 개정 기준</div></div>'
