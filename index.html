@@ -719,6 +719,69 @@ function openAddrSearch(){
     document.getElementById('inAddress').value=data.roadAddress||data.jibunAddress;
   }}).open();
 }
+/* ── 이미지 저장 ── */
+function saveAsImage(){
+  var el = document.getElementById('printArea');
+  if(!el){ alert('처방서를 먼저 생성해주세요.'); return; }
+
+  /* html2canvas 동적 로드 */
+  function doCapture(){
+    var btn = document.getElementById('pBtnRow');
+    if(btn) btn.style.display='none';
+    html2canvas(el, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false,
+      windowWidth: el.scrollWidth,
+      windowHeight: el.scrollHeight
+    }).then(function(canvas){
+      if(btn) btn.style.display='';
+      var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if(isIOS){
+        /* iOS: 새 탭에서 열기 → 길게 눌러 저장 */
+        var win = window.open('','_blank');
+        win.document.write(
+          '<html><head><title>처방서</title>'
+          +'<meta name="viewport" content="width=device-width,initial-scale=1">'
+          +'<style>body{margin:0;background:#eee;display:flex;flex-direction:column;align-items:center;padding:16px;font-family:sans-serif}'
+          +'p{font-size:14px;color:#333;margin-bottom:12px;text-align:center}'
+          +'img{max-width:100%;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.2)}'
+          +'</style></head><body>'
+          +'<p>📥 이미지를 <b>길게 눌러</b> 사진첩에 저장하세요</p>'
+          +'<img src="'+canvas.toDataURL("image/png")+'">'
+          +'</body></html>'
+        );
+        win.document.close();
+      } else {
+        /* PC / Android: 직접 다운로드 */
+        var today = new Date();
+        var fname = '시비처방서_'+today.getFullYear()+(today.getMonth()+1<10?'0':'')+(today.getMonth()+1)+(today.getDate()<10?'0':'')+today.getDate()+'.png';
+        var link = document.createElement('a');
+        link.download = fname;
+        link.href = canvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }).catch(function(e){
+      if(btn) btn.style.display='';
+      alert('이미지 생성 중 오류: '+e.message);
+    });
+  }
+
+  if(typeof html2canvas !== 'undefined'){
+    doCapture();
+  } else {
+    /* 동적 로드 */
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    s.onload = function(){ doCapture(); };
+    s.onerror = function(){ alert('이미지 변환 라이브러리를 불러오지 못했습니다.\n인터넷 연결을 확인해주세요.'); };
+    document.head.appendChild(s);
+  }
+}
+
 /* ── 인쇄 ── */
 function doPrint(){
   var ua=navigator.userAgent;
@@ -2237,7 +2300,7 @@ function printPrescription(){
   }
 
   var inner=
-    '<div class="p-btn-row" style="display:flex;gap:10px;margin-bottom:16px">'    +'<button class="p-close-btn" style="margin:0;flex:1" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;background:var(--green)" onclick="doPrint()">🖨️ 인쇄하기</button>'    +'</div>'
+    '<div class="p-btn-row" id="pBtnRow" style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:100px" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:100px;background:#2563EB" onclick="saveAsImage()">🖼️ 이미지 저장</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:100px;background:var(--green)" onclick="doPrint()">🖨️ 인쇄하기</button>'    +'</div>'
     +'<div class="p-hdr">'
       +'<div><div class="p-title">토양 비료 사용처방서</div>'
         +'<div class="p-sub">남해화학 정밀 시비처방 프로그램  ·  농촌진흥청 3차 개정 기준</div></div>'
