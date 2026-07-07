@@ -326,7 +326,7 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 }
 </style>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer onerror="console.warn('html2canvas 로드 실패')"></script>
 </head>
 <body>
 
@@ -759,6 +759,7 @@ function doPrint(){
 
 /* ── 이미지 저장 ── */
 function saveAsImage(){
+  if(typeof html2canvas==='undefined'){ alert('이미지 저장 기능을 불러오는 중입니다. 잠시 후 다시 시도해주세요.'); return; }
   var el = document.getElementById('printArea');
   if(!el){ alert('처방서를 먼저 생성해주세요.'); return; }
   var btn = document.getElementById('pBtnRow');
@@ -791,6 +792,7 @@ function saveAsImage(){
 
 /* ── 카카오톡 공유 ── */
 function shareKakao(){
+  if(typeof html2canvas==='undefined'){ alert('공유 기능을 불러오는 중입니다. 잠시 후 다시 시도해주세요.'); return; }
   var el = document.getElementById('printArea');
   if(!el){ alert('처방서를 먼저 생성해주세요.'); return; }
   var btn = document.getElementById('pBtnRow');
