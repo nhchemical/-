@@ -437,14 +437,16 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
       <div class="field" style="grid-column:1/-1">
         <label>재배지 <span style="font-size:10px;color:var(--gray-400)">(주소 검색 버튼을 눌러주세요)</span></label>
         <div style="display:flex;gap:8px;align-items:center;">
-          <input type="text" id="inAddress" placeholder="주소 검색 버튼을 눌러주세요" readonly
-            style="flex:1;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-200);border-radius:7px;font-family:inherit;background:#fff;cursor:pointer;"
+          <input type="text" id="inAddress" placeholder="아래 버튼을 눌러 주소를 검색하세요" readonly
+            style="flex:1;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-200);border-radius:7px;font-family:inherit;background:#fafafa;cursor:pointer;"
             onclick="openAddrSearch()">
           <button type="button" onclick="openAddrSearch()"
-            style="flex-shrink:0;padding:8px 14px;background:var(--primary);color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">
+            style="flex-shrink:0;padding:9px 16px;background:#1A4D8F;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;letter-spacing:-0.3px;">
             🔍 주소 검색
           </button>
         </div>
+        <input type="text" id="inAddressDetail" placeholder="상세 주소 입력 (동·호수, 필지번호 등 / 주소 미검색 시 직접 입력)"
+          style="width:100%;margin-top:6px;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-200);border-radius:7px;font-family:inherit;box-sizing:border-box;">
       </div>
     </div>
 
@@ -745,22 +747,20 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 <script>
 /* ── 카카오 주소 검색 ── */
 function openAddrSearch(){
+  if(typeof daum === 'undefined' || typeof daum.Postcode === 'undefined'){
+    alert('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.\n(인터넷 연결을 확인해주세요)');
+    return;
+  }
   new daum.Postcode({
     oncomplete: function(data){
-      /* 도로명 우선, 없으면 지번 */
       var addr = data.roadAddress || data.jibunAddress;
       document.getElementById('inAddress').value = addr;
-      /* 포커스 이동 */
-      document.getElementById('inAddress').blur();
     },
-    /* 모바일: 전체화면 / PC: 팝업 */
-    width: '100%',
-    height: '100%',
-    maxSuggestItems: 5
-  }).open({
-    popupTitle: '재배지 주소 검색',
-    popupKey: 'addrSearch'
-  });
+    theme: {
+      searchBgColor: '#1A4D8F',
+      queryTextColor: '#FFFFFF'
+    }
+  }).open();
 }
 
 var DEALERS = {
@@ -2423,7 +2423,11 @@ function printPrescription(){
     staff:   document.getElementById('inStaff').value.trim(),
     name:    document.getElementById('inName').value.trim(),
     phone:   document.getElementById('inPhone').value.trim(),
-    farmAddress: document.getElementById('inAddress').value.trim(),
+    farmAddress: (function(){
+        var a = document.getElementById('inAddress').value.trim();
+        var b = document.getElementById('inAddressDetail').value.trim();
+        return b ? a + ' ' + b : a;
+      })(),
     crop:    cr.nm,
     area:    area,
     areaPy:  Math.round(area*30.25),
@@ -2605,7 +2609,7 @@ function showFieldAlert(fieldId, msg){
 function checkConsentAndNext(){
   var name    =(document.getElementById('inName').value||'').trim();
   var phone   =(document.getElementById('inPhone').value||'').trim();
-  var address =(document.getElementById('inAddress').value||'').trim();
+  var address =((document.getElementById('inAddress').value||'')+(document.getElementById('inAddressDetail').value||'')).trim();
   var consent =document.getElementById('chkConsent').checked;
 
   if(!name){
