@@ -724,7 +724,6 @@ function saveAsImage(){
   var el = document.getElementById('printArea');
   if(!el){ alert('처방서를 먼저 생성해주세요.'); return; }
 
-  /* html2canvas 동적 로드 */
   function doCapture(){
     var btn = document.getElementById('pBtnRow');
     if(btn) btn.style.display='none';
@@ -737,53 +736,39 @@ function saveAsImage(){
       windowHeight: el.scrollHeight
     }).then(function(canvas){
       if(btn) btn.style.display='';
-      var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-      if(isIOS){
-        /* iOS: 새 탭에서 열기 → 길게 눌러 저장 */
+      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if(isMobile){
+        /* 모바일: 새 탭에서 이미지 열기 → 길게 눌러 저장 */
         var win = window.open('','_blank');
+        var imgSrc = canvas.toDataURL('image/png');
         win.document.write(
-          '<html><head><title>처방서</title>'
+          '<html><head><title>처방서 저장</title>'
           +'<meta name="viewport" content="width=device-width,initial-scale=1">'
           +'<style>'
-          +'body{margin:0;background:#f0f0f0;font-family:-apple-system,sans-serif;padding:16px}'
-          +'.top{background:#1A4D8F;color:#fff;border-radius:10px;padding:14px 16px;margin-bottom:12px;text-align:center}'
-          +'.top h3{margin:0 0 6px;font-size:16px}'
-          +'.top p{margin:0;font-size:12px;opacity:.85}'
-          +'.links{display:flex;gap:10px;margin-bottom:14px}'
-          +'.lbtn{flex:1;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-size:13px;font-weight:700}'
-          +'.kakao{background:#FAE100;color:#3A1D1D}'
-          +'.yt{background:#FF0000;color:#fff}'
-          +'img{max-width:100%;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.2)}'
-          +'.hint{text-align:center;font-size:13px;color:#555;margin-bottom:10px}'
+          +'*{box-sizing:border-box;margin:0;padding:0}'
+          +'body{background:#f5f5f5;font-family:-apple-system,sans-serif;padding:14px}'
+          +'.guide{background:#1A4D8F;color:#fff;border-radius:10px;padding:14px;margin-bottom:12px;text-align:center;font-size:14px;line-height:1.6}'
+          +'.guide b{font-size:16px;display:block;margin-bottom:4px}'
+          +'img{width:100%;border-radius:8px;box-shadow:0 2px 16px rgba(0,0,0,.15)}'
           +'</style></head><body>'
-          +'<div class="top"><h3>📥 처방서 저장 방법</h3><p>아래 이미지를 <b>길게 눌러</b> 사진첩에 저장 후<br>카카오톡으로 전송하세요</p></div>'
-          +'<div class="links">'
-          +'<a class="lbtn kakao" href="https://pf.kakao.com/_xiYvxhX" target="_blank">💬 카카오톡 채널</a>'
-          +'<a class="lbtn yt" href="https://www.youtube.com/@남해화학" target="_blank">▶ 유튜브 채널</a>'
-          +'</div>'
-          +'<p class="hint">⬇ 이미지를 길게 눌러 저장하세요</p>'
-          +'<img src="'+canvas.toDataURL("image/png")+'">'
+          +'<div class="guide"><b>📥 이미지 저장</b>아래 이미지를 <b>길게 눌러</b> 저장하세요</div>'
+          +'<img src="'+imgSrc+'">'
           +'</body></html>'
         );
         win.document.close();
       } else {
-        /* PC / Android: 직접 다운로드 */
+        /* PC: 직접 다운로드 */
         var today = new Date();
-        var fname = '시비처방서_'+today.getFullYear()+(today.getMonth()+1<10?'0':'')+(today.getMonth()+1)+(today.getDate()<10?'0':'')+today.getDate()+'.png';
+        var ymd = today.getFullYear()+('0'+(today.getMonth()+1)).slice(-2)+('0'+today.getDate()).slice(-2);
         var link = document.createElement('a');
-        link.download = fname;
+        link.download = '시비처방서_'+ymd+'.png';
         link.href = canvas.toDataURL('image/png');
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        /* 저장 후 카카오/유튜브 안내 */
-        setTimeout(function(){
-          if(confirm('✅ 이미지가 저장되었습니다!\n\n카카오톡으로 전송하시겠습니까?\n(확인 클릭 시 카카오톡 채널로 이동)'))
-            window.open('https://pf.kakao.com/_xiYvxhX','_blank');
-        }, 500);
       }
     }).catch(function(e){
-      if(btn) btn.style.display='';
+      if(document.getElementById('pBtnRow')) document.getElementById('pBtnRow').style.display='';
       alert('이미지 생성 중 오류: '+e.message);
     });
   }
@@ -791,7 +776,6 @@ function saveAsImage(){
   if(typeof html2canvas !== 'undefined'){
     doCapture();
   } else {
-    /* 동적 로드 */
     var s = document.createElement('script');
     s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
     s.onload = function(){ doCapture(); };
