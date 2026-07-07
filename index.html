@@ -326,6 +326,7 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 }
 </style>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -748,16 +749,79 @@ function doPrint(){
   var isIOS = /iPhone|iPad|iPod/i.test(ua);
   var isAndroid = /Android/i.test(ua);
   if(isIOS){
-    if(confirm('📋 PDF 저장 방법\n\n① 하단 공유버튼(□↑) 탭\n② "PDF로 내보내기" 선택\n\n또는 브라우저 메뉴 → 프린트\n\n지금 바로 공유 메뉴를 여시겠습니까?')){
-      if(navigator.share){
-        navigator.share({title:'토양 비료 사용처방서', url: window.location.href});
-      }
-    }
+    alert('📋 PDF 저장 방법 (iPhone/iPad)\n\n① 화면 하단 공유버튼(□↑) 탭\n② 아래로 스크롤 → "프린트" 선택\n③ 미리보기 화면에서 두 손가락으로 확대\n④ 왼쪽 상단 공유버튼(□↑) → "파일에 저장"');
   } else if(isAndroid){
-    alert('📋 PDF 저장 방법\n\n브라우저 메뉴(⋮) → 인쇄 → PDF로 저장\n\n확인 후 메뉴를 열어주세요.');
+    alert('📋 PDF 저장 방법 (Android)\n\n① 브라우저 우측 상단 메뉴(⋮) 탭\n② "인쇄" 선택\n③ 프린터 선택에서 "PDF로 저장" 선택\n④ 저장');
   } else {
     window.print();
   }
+}
+
+/* ── 이미지 저장 ── */
+function saveAsImage(){
+  var el = document.getElementById('printArea');
+  if(!el){ alert('처방서를 먼저 생성해주세요.'); return; }
+  var btn = document.getElementById('pBtnRow');
+  if(btn) btn.style.display='none';
+  html2canvas(el, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#ffffff',
+    logging: false
+  }).then(function(canvas){
+    if(btn) btn.style.display='';
+    var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if(isIOS){
+      /* iOS: 새 탭에서 이미지 열기 → 길게 눌러 저장 */
+      var win = window.open('','_blank');
+      win.document.write('<html><head><title>처방서</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;background:#eee;display:flex;flex-direction:column;align-items:center;padding:16px"><p style="font-size:14px;color:#333;margin-bottom:12px">📥 이미지를 <b>길게 눌러</b> 저장하세요</p><img src="'+canvas.toDataURL('image/png')+'" style="max-width:100%;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.2)"></body></html>');
+    } else {
+      /* Android/PC: 직접 다운로드 */
+      var link = document.createElement('a');
+      link.download = '시비처방서_' + new Date().toISOString().slice(0,10) + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+  }).catch(function(e){
+    if(btn) btn.style.display='';
+    alert('이미지 생성 중 오류가 발생했습니다.
+' + e.message);
+  });
+}
+
+/* ── 카카오톡 공유 ── */
+function shareKakao(){
+  var el = document.getElementById('printArea');
+  if(!el){ alert('처방서를 먼저 생성해주세요.'); return; }
+  var btn = document.getElementById('pBtnRow');
+  if(btn) btn.style.display='none';
+  html2canvas(el, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#ffffff',
+    logging: false
+  }).then(function(canvas){
+    if(btn) btn.style.display='';
+    /* 이미지 → blob → 공유 시도 */
+    canvas.toBlob(function(blob){
+      var file = new File([blob], '시비처방서.png', {type:'image/png'});
+      if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+        navigator.share({
+          title: '토양 비료 사용처방서',
+          text: '남해화학 정밀 시비처방 프로그램',
+          files: [file]
+        }).catch(function(){});
+      } else {
+        /* 파일 공유 미지원 시 카카오톡 앱 링크로 대체 */
+        var dataUrl = canvas.toDataURL('image/png');
+        var win = window.open('','_blank');
+        win.document.write('<html><head><title>처방서 공유</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;background:#eee;display:flex;flex-direction:column;align-items:center;padding:16px"><p style="font-size:14px;color:#333;margin-bottom:8px">📤 이미지를 <b>길게 눌러 저장</b> 후<br>카카오톡으로 전송해주세요</p><img src="'+dataUrl+'" style="max-width:100%;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.2)"></body></html>');
+      }
+    }, 'image/png');
+  }).catch(function(e){
+    if(btn) btn.style.display='';
+    alert('오류: ' + e.message);
+  });
 }
 
 /* ── 카카오 주소 검색 ── */
@@ -2299,7 +2363,7 @@ function printPrescription(){
   }
 
   var inner=
-    '<div class="p-btn-row" style="display:flex;gap:10px;margin-bottom:16px">'    +'<button class="p-close-btn" style="margin:0;flex:1" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;background:var(--green)" onclick="doPrint()">🖨️ 인쇄 / PDF저장</button>'    +'</div>'
+    '<div class="p-btn-row" id="pBtnRow" style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:120px" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:120px;background:#2563EB" onclick="saveAsImage()">🖼️ 이미지 저장</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:120px;background:#FAE100;color:#3A1D1D" onclick="shareKakao()">💬 카카오 공유</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:120px;background:var(--green)" onclick="doPrint()">🖨️ 인쇄/PDF</button>'    +'</div>'
     +'<div class="p-hdr">'
       +'<div><div class="p-title">토양 비료 사용처방서</div>'
         +'<div class="p-sub">남해화학 정밀 시비처방 프로그램  ·  농촌진흥청 3차 개정 기준</div></div>'
