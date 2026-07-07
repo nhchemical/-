@@ -115,6 +115,41 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 @media(max-width:600px){
   .g2,.g3{grid-template-columns:1fr}
   .metrics{grid-template-columns:1fr 1fr 1fr}
+  /* 앱 전체 패딩 축소 */
+  .app{padding:12px 10px}
+  /* 헤더 */
+  .header{padding:14px 16px;gap:10px}
+  .header-title h1{font-size:15px}
+  .header-title p{font-size:11px}
+  /* 스텝바 */
+  .stepbar{gap:0}
+  .step-label{font-size:9px}
+  /* 카드 */
+  .card{padding:14px 12px}
+  .card-title{font-size:13px}
+  /* 비료 카드 */
+  .pcrd{padding:10px 10px;gap:8px}
+  .pnm{font-size:13px}
+  .pinf{font-size:11px}
+  .bagbox{min-width:52px;padding:6px 8px}
+  .bagn{font-size:20px}
+  .bagu{font-size:9px}
+  .rnk{width:24px;height:24px;font-size:11px;flex-shrink:0}
+  /* 폼 필드 */
+  .field label{font-size:12px}
+  .field input, .field select{font-size:14px;padding:9px 10px}
+  /* 버튼 */
+  .btn-primary,.btn-secondary{font-size:14px;padding:13px}
+  /* 토양 입력 */
+  .soil-grid{gap:8px}
+  /* metrics */
+  .metric-val{font-size:22px}
+  .metric-lbl{font-size:10px}
+  /* 처방서 요약 */
+  .rx-row{font-size:12px;padding:10px 0}
+  .rx-val{font-size:14px}
+  /* Step 헤더 */
+  .card-title span{font-size:10px !important;display:block;margin-left:0 !important;margin-top:3px}
 }
 
 .card-scroll{max-height:430px;overflow-y:auto;padding-right:4px;}
@@ -159,43 +194,7 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
   #printArea td, #printArea th { padding: 3px 5px !important; }
   #printArea .fcat { font-size: 10px !important; }
   #printArea .p-notice { font-size: 9px !important; margin-top: 5px !important; line-height: 1.5 !important; }
-  #printArea .p-links { margin-top: 8px !important; padding: 8px 14px !important; }
-  #printArea .p-qr-item img.p-qr-code { width: 48px !important; height: 48px !important; }
-  #printArea { page-break-inside: avoid; }
-}
-#printArea {
-  display: none;
-  font-family: "맑은 고딕","Apple SD Gothic Neo",sans-serif;
-  font-size: 13px;
-  color: #111;
-  padding: 20px;
-  background: #fff;
-}
-#printArea .p-hdr {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  border-bottom: 3px solid #0D2B4E; padding-bottom: 12px; margin-bottom: 16px;
-}
-#printArea .p-title { font-size: 24px; font-weight: 700; color: #0D2B4E; }
-#printArea .p-sub { font-size: 11px; color: #555; margin-top: 4px; }
-#printArea .p-date { text-align: right; font-size: 11px; color: #777; line-height: 1.7; }
-#printArea .p-sec {
-  background: #0D2B4E; color: #fff; font-size: 12px; font-weight: 700;
-  padding: 5px 12px; margin: 14px 0 8px;
-}
-#printArea table { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
-#printArea th {
-  background: #1A4D8F; color: #fff; padding: 6px 10px;
-  font-size: 12px; border: 1px solid #aaa; text-align: center;
-}
-#printArea td { padding: 6px 10px; border: 1px solid #ccc; font-size: 12px; text-align: center; vertical-align: middle; }
-#printArea .fcat { font-weight: 700; background: #EFF6FF; font-size: 11px; width: 12%; }
-#printArea .fnm { text-align: left; font-weight: 600; }
-#printArea .p-notice { font-size: 11px; color: #555; margin-top: 14px; line-height: 2; }
-#printArea .p-notice div::before { content: "* "; }
-#printArea .p-notice .p-contact { font-size: 12px; color: #0D2B4E; font-weight: 700; margin-top: 6px; padding: 5px 8px; background: #EEF3FA; border-left: 3px solid #0D2B4E; line-height: 1.8; }
-#printArea .p-notice .p-contact::before { content: ""; }
-* { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-#printArea .p-links { margin-top: 8px !important; padding: 8px 14px !important; }
+    #printArea .p-links { margin-top: 8px !important; padding: 8px 14px !important; }
   #printArea .p-qr-item img.p-qr-code { width: 48px !important; height: 48px !important; }
   #printArea { page-break-inside: avoid; }
 }
@@ -232,24 +231,20 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 #printArea .p-notice .p-contact::before { content: ""; }
 * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 #printArea .p-links {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-top: 14px; padding: 14px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+  margin-top: 14px; padding: 12px 14px;
   background: #F8F5EF; border-radius: 8px;
   font-family: "Pretendard","맑은 고딕","Apple SD Gothic Neo",sans-serif;
 }
-#printArea .p-links-left { font-size: 19px; font-weight: 700; color: #1A4D8F; letter-spacing: -0.2px; }
-#printArea .p-links-right { display: flex; gap: 24px; align-items: center; }
-#printArea .p-links-wrap { display: flex; flex-direction: column; gap: 6px; }
-#printArea .p-qr-item { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-#printArea .p-qr-label { display: flex; align-items: center; gap: 5px; }
+#printArea .p-links-left { font-size: 15px; font-weight: 700; color: #1A4D8F; letter-spacing: -0.2px; }
+#printArea .p-links-right { display: flex; flex-direction: row; gap: 16px; align-items: center; flex-wrap: wrap; }
+#printArea .p-qr-item { display: flex; flex-direction: row; align-items: center; gap: 8px; flex: 1; min-width: 140px; }
+#printArea .p-qr-divider { width: 1px; background: #ddd; align-self: stretch; flex-shrink: 0; }
 #printArea .p-qr-icon { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; object-fit: cover; }
-#printArea .p-qr-text { font-size: 11.5px; color: #333; line-height: 1.4; font-weight: 600; letter-spacing: -0.2px; white-space: nowrap; }
+#printArea .p-qr-text { font-size: 12px; color: #333; line-height: 1.4; font-weight: 600; letter-spacing: -0.2px; white-space: nowrap; }
 #printArea .p-qr-text b { display: inline; color: #1A4D8F; font-weight: 700; }
 #printArea a:hover .p-qr-text { text-decoration: underline; }
-#printArea .p-qr-item img.p-qr-code { width: 40px; height: 40px; border: 1.5px solid #ddd; border-radius: 5px; flex-shrink: 0; }
-@media print {
-  #printArea .p-links-right { flex-direction: row !important; }
-}
+#printArea .p-qr-item img.p-qr-code { width: 56px; height: 56px; border: 2px solid #ccc; border-radius: 6px; flex-shrink: 0; display: block; }
 
 #printArea .p-close-btn {
   display: block; margin: 0 auto 16px;
@@ -745,6 +740,20 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 </div><!-- /app -->
 
 <script>
+/* ── 모바일 인쇄 ── */
+function mobilePrint(){
+  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if(isMobile){
+    /* 모바일: 공유 시트 또는 안내 */
+    if(navigator.share){
+      alert('📋 인쇄하기\n\n① 아래 [공유] 버튼 → [프린트] 선택\n또는\n② 브라우저 메뉴 → [공유] → [프린트]\n\n확인을 누르면 인쇄 화면으로 이동합니다.');
+    } else {
+      alert('📋 인쇄 / PDF 저장\n\n브라우저 메뉴(⋮ 또는 □↑) → [인쇄] 또는 [PDF로 저장]을 선택해주세요.\n\n확인을 누르면 인쇄 화면으로 이동합니다.');
+    }
+  }
+  window.print();
+}
+
 /* ── 카카오 주소 검색 ── */
 function openAddrSearch(){
   if(typeof daum === 'undefined' || typeof daum.Postcode === 'undefined'){
@@ -2284,7 +2293,7 @@ function printPrescription(){
   }
 
   var inner=
-    '<div class="p-btn-row" style="display:flex;gap:10px;margin-bottom:16px">'    +'<button class="p-close-btn" style="margin:0;flex:1" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;background:var(--green)" onclick="window.print()">🖨️ 인쇄하기</button>'    +'</div>'
+    '<div class="p-btn-row" style="display:flex;gap:10px;margin-bottom:16px">'    +'<button class="p-close-btn" style="margin:0;flex:1" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;background:var(--green)" onclick="mobilePrint()">🖨️ 인쇄하기</button>'    +'</div>'
     +'<div class="p-hdr">'
       +'<div><div class="p-title">토양 비료 사용처방서</div>'
         +'<div class="p-sub">남해화학 정밀 시비처방 시스템  ·  농촌진흥청 3차 개정 기준</div></div>'
