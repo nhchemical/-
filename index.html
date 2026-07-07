@@ -331,17 +331,27 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 <body>
 
 <script>
+var JISA_PW = {
+  "경인지사": "GI2601",
+  "강원지사": "GW2602",
+  "충북지사": "CB2603",
+  "충남지사": "CN2604",
+  "전북지사": "JB2605",
+  "전남지사": "JN2606",
+  "경북지사": "GB2607",
+  "경남지사": "GN2608",
+  "제주지사": "JJ2609"
+}
 function doLogin(){
   var jisa = document.getElementById('loginJisa').value;
   var pw   = document.getElementById('loginPw').value;
   var err  = document.getElementById('loginErr');
   if(!jisa){ err.textContent='지사를 선택해주세요.'; return; }
   if(!pw)  { err.textContent='비밀번호를 입력해주세요.'; return; }
-  if(!window.JISA_PW){ err.textContent='시스템 로딩 중입니다. 잠시 후 다시 시도해주세요.'; return; }
   if(JISA_PW[jisa].toLowerCase() !== pw.toLowerCase()){ err.textContent='비밀번호가 올바르지 않습니다.'; return; }
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('selJisa').value=jisa;
-  onJisaChange();
+  if(typeof onJisaChange==='function') onJisaChange();
   err.textContent='';
 }
 </script>
