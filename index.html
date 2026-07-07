@@ -2391,16 +2391,8 @@ function printPrescription(){
   var _t1={nm:'',bags:0}, _t2={nm:'',bags:0}, _t3={nm:'',bags:0};
 
   if(_isSlow2){
-    /* 완효성: 전체 추비 합산 → 1회 통합 저장 */
-    var _totalTopPct=0;
-    for(var _r=1;_r<=3;_r++) _totalTopPct+=(_sN2[_r]||0);
-    var _topNmSlow=_byRound[1]||(mt.rT&&mt.rT.length?mt.rT[0]:null);
-    var _topPrSlow=_topNmSlow?PRODUCTS[_topNmSlow]:null;
-    if(_topPrSlow&&_topPrSlow.N>0&&_totalTopPct>0){
-      var _nAll=r2(n1*_totalTopPct/100);
-      _t1={nm:_topNmSlow, bags:calcBags(r2(_nAll*fac),_topPrSlow.N).bags};
-    }
-    /* 2차·3차는 빈값 — 처방서와 동일하게 통합 1회만 저장 */
+    /* 완효성: 웃거름 없음 — 모두 빈값으로 저장 */
+    _t1={nm:'',bags:0}; _t2={nm:'',bags:0}; _t3={nm:'',bags:0};
   } else {
     /* 일반: 회차별 개별 저장 */
     function _topInfo(roundIdx){
