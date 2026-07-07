@@ -1877,7 +1877,7 @@ function makeBaseCards(list,nB,fac,baseRatio,n1){
   if(!list||!list.length) return '';
   var nBTotal=r2(nB*fac);
   var n1Total=n1?r2(n1*fac):nBTotal;
-  var h='<p class="card-title">Step 3 · 밑거름 추천 10종 <span id="baseRatioBadge">(밑거름 '+(baseRatio||60)+'%)</span>'
+  var h='<p class="card-title">Step 2 · 밑거름 추천 10종 <span id="baseRatioBadge">(밑거름 '+(baseRatio||60)+'%)</span>'
     +'<span id="baseHeaderInfo" style="font-size:11px;font-weight:400;color:var(--gray-600);margin-left:8px">'
     +'10a당 N요구량 '+nB+'kg → 전체 '+nBTotal+'kg &nbsp;|&nbsp; 카드를 선택하면 웃거름이 계산됩니다</span></p>';
   var cards='';
