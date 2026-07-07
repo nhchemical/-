@@ -115,41 +115,19 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 @media(max-width:600px){
   .g2,.g3{grid-template-columns:1fr}
   .metrics{grid-template-columns:1fr 1fr 1fr}
-  /* 앱 전체 패딩 축소 */
   .app{padding:12px 10px}
-  /* 헤더 */
   .header{padding:14px 16px;gap:10px}
   .header-title h1{font-size:15px}
-  .header-title p{font-size:11px}
-  /* 스텝바 */
-  .stepbar{gap:0}
-  .step-label{font-size:9px}
-  /* 카드 */
   .card{padding:14px 12px}
-  .card-title{font-size:13px}
-  /* 비료 카드 */
   .pcrd{padding:10px 10px;gap:8px}
   .pnm{font-size:13px}
   .pinf{font-size:11px}
   .bagbox{min-width:52px;padding:6px 8px}
   .bagn{font-size:20px}
   .bagu{font-size:9px}
-  .rnk{width:24px;height:24px;font-size:11px;flex-shrink:0}
-  /* 폼 필드 */
-  .field label{font-size:12px}
-  .field input, .field select{font-size:14px;padding:9px 10px}
-  /* 버튼 */
   .btn-primary,.btn-secondary{font-size:14px;padding:13px}
-  /* 토양 입력 */
-  .soil-grid{gap:8px}
-  /* metrics */
   .metric-val{font-size:22px}
-  .metric-lbl{font-size:10px}
-  /* 처방서 요약 */
   .rx-row{font-size:12px;padding:10px 0}
-  .rx-val{font-size:14px}
-  /* Step 헤더 */
-  .card-title span{font-size:10px !important;display:block;margin-left:0 !important;margin-top:3px}
 }
 
 .card-scroll{max-height:430px;overflow-y:auto;padding-right:4px;}
@@ -175,7 +153,15 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 
 <style id="printStyle">
 @media print {
-  body > .app { display: none !important; }
+  body > .app { display: none !important;   @page { size: A4 portrait; margin: 8mm 10mm; }
+  #printArea { font-size: 11px !important; }
+  #printArea .p-title { font-size: 20px !important; }
+  #printArea .p-sec { font-size: 10px !important; padding: 3px 8px !important; }
+  #printArea table { font-size: 10px !important; }
+  #printArea td, #printArea th { padding: 3px 5px !important; }
+  #printArea .p-notice { font-size: 9px !important; margin-top: 5px !important; }
+  #printArea .p-links { margin-top: 8px !important; padding: 8px 14px !important; }
+}
   #printArea { display: block !important; }
   #printArea .p-btn-row { display: none !important; }
   * {
@@ -186,17 +172,6 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
   #printArea .p-sec { background: #0D2B4E !important; color: #fff !important; }
   #printArea th { background: #1A4D8F !important; color: #fff !important; }
   #printArea .fcat { background: #EFF6FF !important; }
-  @page { size: A4 portrait; margin: 8mm 10mm; }
-  #printArea { font-size: 11px !important; }
-  #printArea .p-title { font-size: 20px !important; }
-  #printArea .p-sec { font-size: 10px !important; padding: 3px 8px !important; }
-  #printArea table { font-size: 10px !important; }
-  #printArea td, #printArea th { padding: 3px 5px !important; }
-  #printArea .fcat { font-size: 10px !important; }
-  #printArea .p-notice { font-size: 9px !important; margin-top: 5px !important; line-height: 1.5 !important; }
-    #printArea .p-links { margin-top: 8px !important; padding: 8px 14px !important; }
-  #printArea .p-qr-item img.p-qr-code { width: 48px !important; height: 48px !important; }
-  #printArea { page-break-inside: avoid; }
 }
 #printArea {
   display: none;
@@ -236,17 +211,16 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
   background: #F8F5EF; border-radius: 8px;
   font-family: "Pretendard","맑은 고딕","Apple SD Gothic Neo",sans-serif;
 }
-#printArea .p-links-left { font-size: 15px; font-weight: 700; color: #1A4D8F; letter-spacing: -0.2px; }
+#printArea .p-links-left { font-size: 15px; font-weight: 700; color: #1A4D8F; }
 #printArea .p-links-right { display: flex; flex-direction: row; gap: 20px; align-items: flex-start; }
-/* 각 SNS 아이템: 아이콘+텍스트 위, QR 아래 세로 배치 */
 #printArea .p-qr-item { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
 #printArea .p-qr-item a { display: flex; align-items: center; gap: 5px; }
 #printArea .p-qr-divider { width: 1px; background: #ddd; align-self: stretch; flex-shrink: 0; }
 #printArea .p-qr-icon { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; object-fit: cover; }
-#printArea .p-qr-text { font-size: 12px; color: #333; line-height: 1.4; font-weight: 600; letter-spacing: -0.2px; white-space: nowrap; }
-#printArea .p-qr-text b { display: inline; color: #1A4D8F; font-weight: 700; }
+#printArea .p-qr-text { font-size: 12px; color: #333; font-weight: 600; white-space: nowrap; }
+#printArea .p-qr-text b { color: #1A4D8F; font-weight: 700; }
 #printArea a:hover .p-qr-text { text-decoration: underline; }
-#printArea .p-qr-item img.p-qr-code { width: 72px; height: 72px; border: 2px solid #ccc; border-radius: 6px; flex-shrink: 0; display: block; }
+#printArea .p-qr-item img.p-qr-code { width: 72px; height: 72px; border: 2px solid #ccc; border-radius: 6px; display: block; }
 
 #printArea .p-close-btn {
   display: block; margin: 0 auto 16px;
@@ -326,7 +300,6 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 }
 </style>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer onerror="console.warn('html2canvas 로드 실패')"></script>
 </head>
 <body>
 
@@ -343,19 +316,17 @@ var JISA_PW = {
   "제주지사": "JJ2609"
 }
 function doLogin(){
-  var jisa = document.getElementById('loginJisa').value;
-  var pw   = document.getElementById('loginPw').value;
-  var err  = document.getElementById('loginErr');
-  if(!jisa){ err.textContent='지사를 선택해주세요.'; return; }
-  if(!pw)  { err.textContent='비밀번호를 입력해주세요.'; return; }
-  if(JISA_PW[jisa].toLowerCase() !== pw.toLowerCase()){ err.textContent='비밀번호가 올바르지 않습니다.'; return; }
+  var jisa=document.getElementById('loginJisa').value;
+  var pw=document.getElementById('loginPw').value;
+  var err=document.getElementById('loginErr');
+  if(!jisa){err.textContent='지사를 선택해주세요.';return;}
+  if(!pw){err.textContent='비밀번호를 입력해주세요.';return;}
+  if(JISA_PW[jisa].toLowerCase()!==pw.toLowerCase()){err.textContent='비밀번호가 올바르지 않습니다.';return;}
   document.getElementById('loginScreen').style.display='none';
-  document.getElementById('selJisa').value=jisa;
+  var sel=document.getElementById('selJisa');
+  sel.value=jisa;
+  sel.dispatchEvent(new Event('change'));
   err.textContent='';
-  /* selJisa change 이벤트 발생 → onJisaChange 자동 호출 */
-  var _el=document.getElementById('selJisa');
-  var _ev=new Event('change');
-  _el.dispatchEvent(_ev);
 }
 </script>
 <div id="loginScreen">
@@ -467,7 +438,7 @@ function doLogin(){
             style="flex:1;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-200);border-radius:7px;font-family:inherit;background:#fafafa;cursor:pointer;"
             onclick="openAddrSearch()">
           <button type="button" onclick="openAddrSearch()"
-            style="flex-shrink:0;padding:9px 16px;background:#1A4D8F;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;letter-spacing:-0.3px;">
+            style="flex-shrink:0;padding:9px 16px;background:#1A4D8F;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">
             🔍 주소 검색
           </button>
         </div>
@@ -771,105 +742,33 @@ function doLogin(){
 </div><!-- /app -->
 
 <script>
-/* ── 인쇄 / PDF 저장 ── */
-function doPrint(){
-  var ua = navigator.userAgent;
-  var isIOS = /iPhone|iPad|iPod/i.test(ua);
-  var isAndroid = /Android/i.test(ua);
-  if(isIOS){
-    alert('📋 PDF 저장 방법 (iPhone/iPad)\n\n① 화면 하단 공유버튼(□↑) 탭\n② 아래로 스크롤 → "프린트" 선택\n③ 미리보기 화면에서 두 손가락으로 확대\n④ 왼쪽 상단 공유버튼(□↑) → "파일에 저장"');
-  } else if(isAndroid){
-    alert('📋 PDF 저장 방법 (Android)\n\n① 브라우저 우측 상단 메뉴(⋮) 탭\n② "인쇄" 선택\n③ 프린터 선택에서 "PDF로 저장" 선택\n④ 저장');
-  } else {
-    window.print();
-  }
-}
-
-/* ── 이미지 저장 ── */
-function saveAsImage(){
-  if(typeof html2canvas==='undefined'){ alert('이미지 저장 기능을 불러오는 중입니다. 잠시 후 다시 시도해주세요.'); return; }
-  var el = document.getElementById('printArea');
-  if(!el){ alert('처방서를 먼저 생성해주세요.'); return; }
-  var btn = document.getElementById('pBtnRow');
-  if(btn) btn.style.display='none';
-  html2canvas(el, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: '#ffffff',
-    logging: false
-  }).then(function(canvas){
-    if(btn) btn.style.display='';
-    var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if(isIOS){
-      /* iOS: 새 탭에서 이미지 열기 → 길게 눌러 저장 */
-      var win = window.open('','_blank');
-      win.document.write('<html><head><title>처방서</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;background:#eee;display:flex;flex-direction:column;align-items:center;padding:16px"><p style="font-size:14px;color:#333;margin-bottom:12px">📥 이미지를 <b>길게 눌러</b> 저장하세요</p><img src="'+canvas.toDataURL('image/png')+'" style="max-width:100%;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.2)"></body></html>');
-    } else {
-      /* Android/PC: 직접 다운로드 */
-      var link = document.createElement('a');
-      link.download = '시비처방서_' + new Date().toISOString().slice(0,10) + '.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    }
-  }).catch(function(e){
-    if(btn) btn.style.display='';
-    alert('이미지 생성 중 오류가 발생했습니다.
-' + e.message);
-  });
-}
-
-/* ── 카카오톡 공유 ── */
-function shareKakao(){
-  if(typeof html2canvas==='undefined'){ alert('공유 기능을 불러오는 중입니다. 잠시 후 다시 시도해주세요.'); return; }
-  var el = document.getElementById('printArea');
-  if(!el){ alert('처방서를 먼저 생성해주세요.'); return; }
-  var btn = document.getElementById('pBtnRow');
-  if(btn) btn.style.display='none';
-  html2canvas(el, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: '#ffffff',
-    logging: false
-  }).then(function(canvas){
-    if(btn) btn.style.display='';
-    /* 이미지 → blob → 공유 시도 */
-    canvas.toBlob(function(blob){
-      var file = new File([blob], '시비처방서.png', {type:'image/png'});
-      if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
-        navigator.share({
-          title: '토양 비료 사용처방서',
-          text: '남해화학 정밀 시비처방 프로그램',
-          files: [file]
-        }).catch(function(){});
-      } else {
-        /* 파일 공유 미지원 시 카카오톡 앱 링크로 대체 */
-        var dataUrl = canvas.toDataURL('image/png');
-        var win = window.open('','_blank');
-        win.document.write('<html><head><title>처방서 공유</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;background:#eee;display:flex;flex-direction:column;align-items:center;padding:16px"><p style="font-size:14px;color:#333;margin-bottom:8px">📤 이미지를 <b>길게 눌러 저장</b> 후<br>카카오톡으로 전송해주세요</p><img src="'+dataUrl+'" style="max-width:100%;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.2)"></body></html>');
-      }
-    }, 'image/png');
-  }).catch(function(e){
-    if(btn) btn.style.display='';
-    alert('오류: ' + e.message);
-  });
-}
-
 /* ── 카카오 주소 검색 ── */
 function openAddrSearch(){
-  if(typeof daum === 'undefined' || typeof daum.Postcode === 'undefined'){
-    alert('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.\n(인터넷 연결을 확인해주세요)');
+  if(typeof daum==='undefined'||typeof daum.Postcode==='undefined'){
+    alert('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
     return;
   }
   new daum.Postcode({
-    oncomplete: function(data){
-      var addr = data.roadAddress || data.jibunAddress;
-      document.getElementById('inAddress').value = addr;
+    oncomplete:function(data){
+      var addr=data.roadAddress||data.jibunAddress;
+      document.getElementById('inAddress').value=addr;
     },
-    theme: {
-      searchBgColor: '#1A4D8F',
-      queryTextColor: '#FFFFFF'
-    }
+    theme:{searchBgColor:'#1A4D8F',queryTextColor:'#FFFFFF'}
   }).open();
+}
+
+/* ── 인쇄 ── */
+function doPrint(){
+  var ua=navigator.userAgent;
+  var isIOS=/iPhone|iPad|iPod/i.test(ua);
+  var isAndroid=/Android/i.test(ua);
+  if(isIOS){
+    alert('📋 PDF 저장 (iPhone/iPad)\n\n① 하단 공유버튼(□↑) 탭\n② "프린트" 선택\n③ 미리보기를 두 손가락으로 확대\n④ 공유버튼 → "파일에 저장"');
+  } else if(isAndroid){
+    alert('📋 PDF 저장 (Android)\n\n① 브라우저 메뉴(⋮) → 인쇄\n② 프린터를 "PDF로 저장" 선택\n③ 저장');
+  } else {
+    window.print();
+  }
 }
 
 var DEALERS = {
@@ -1038,7 +937,7 @@ function doLogin(){
   err.textContent = '';
 }
 
-/* 로그인 버튼: onclick/onkeydown으로 직접 연결 */
+/* 로그인: onclick/onkeydown 직접 연결 */
 
 function onRegionChange(){
   var jisa = document.getElementById('selJisa').value;
@@ -1965,20 +1864,12 @@ function makeBaseCards(list,nB,fac,baseRatio,n1){
     var nBUse=(pr.t==='완효성')?(n1||nB):nB;
     var nBTotalUse=(pr.t==='완효성')?n1Total:nBTotal;
     var total=calcBags(nBTotalUse,pr.N);
-    /* 10a 표시는 전체 포수 기준 역산 (올림 불일치 방지) */
-    var bags10=fac>1?Math.ceil(total.bags/fac):total.bags;
-    var kgA10=r2(bags10*20);
-    var aN10=r2(bags10*20*(pr.N/100));
-    var per10={bags:bags10,kgA:kgA10,aN:aN10};
-    var tc=pr.t==='완효성'?'t-slow':'t-base';
     var aN10Total=r2(total.bags*20*(pr.N/100));
+    var tc=pr.t==='완효성'?'t-slow':'t-base';
     var det;
-    if(pr.N<=0){ det='칼리·보조 단비'; }
-    else if(pr.t==='완효성'){
-      det='전체 '+total.bags+'포 투입 → 실투입N 전체 '+aN10Total+'kg';
-    } else {
-      det='밑거름 '+total.bags+'포 투입 → 실투입N 전체 '+r2(total.bags*20*(pr.N/100))+'kg';
-    }
+    if(pr.N<=0){det='칼리·보조 단비';}
+    else if(pr.t==='완효성'){det='전체 '+total.bags+'포 투입 → 실투입N 전체 '+aN10Total+'kg';}
+    else{det='밑거름 '+total.bags+'포 투입 → 실투입N 전체 '+r2(total.bags*20*(pr.N/100))+'kg';}
     var slowHint='';
     cards+='<div class="pcrd'+(i===0?' best':'')+'" id="bc-'+nm+'" onclick="selectBase(&apos;'+nm+'&apos;)">'
       +'<div class="rnk'+(i===0?' r1':'')+'">'+( i===0?'★':(i+1))+'</div>'
@@ -1992,7 +1883,7 @@ function makeBaseCards(list,nB,fac,baseRatio,n1){
       +'<div class="bagbox">'
         +'<span class="bagn">'+total.bags+'</span>'
         +'<span class="bagu">포대 (전체)</span>'
-        +''
+        +(fac>1?'<span style="font-size:9px;opacity:.65;display:block;margin-top:1px">10a당 '+per10.bags+'포</span>':'')
       +'</div>'
       +'</div>';
   }
@@ -2025,7 +1916,8 @@ function makeTopCards(list,nReq,fac,roundLabel,roundIdx){
       +'<div class="bagbox">'
         +'<span class="bagn">'+total.bags+'</span>'
         +'<span class="bagu">포대 (전체)</span>'
-            +'</div>'
+        +(fac>1?'<span style="font-size:9px;opacity:.65;display:block;margin-top:1px">10a당 '+per10.bags+'포</span>':'')
+      +'</div>'
       +'</div>';
   }
   return title+'<div class="card-scroll">'+cards+'</div>';
@@ -2053,7 +1945,7 @@ function buildTopSummaryRows(isSlow,n1,sN,fac,topNm,topPr){
 function makeAllTopCards(sN,n1,fac,rT,isSlow){
   if(!rT||!rT.length) return '<p style="font-size:12px;color:var(--gray-400);padding:8px 0">이 작물은 웃거름 추천 제품이 없습니다.</p>';
 
-  /* 완효성: 웃거름 섹션 완전 제거 */
+  /* 완효성: 웃거름 완전 제거 */
   if(isSlow){
     return '<div class="slow-note">✅ 완효성 비료를 선택하셨습니다.<br>웃거름은 생략하시거나 생육상태에 따라 조절하여 추가 시비해주시기 바랍니다.</div>';
   }
@@ -2147,7 +2039,6 @@ function selectBase(nm){
 
   var n1=_rx.n1, sN=_rx.sN, fac=_rx.fac, mt=_rx.mt;
   var isSlow=(pr.t==='완효성');
-  /* 완효성: 헤더 배지 + 10a 정보 숨김 */
   var badge=document.getElementById('baseRatioBadge');
   if(badge) badge.style.display=isSlow?'none':'';
   var hdrInfo=document.getElementById('baseHeaderInfo');
@@ -2259,7 +2150,8 @@ function runCalc(){
   /* 웃거름 (밑거름 선택 후 채워짐) */
   h+='<div class="card">';
   h+='<p class="card-title">Step 3 · 웃거름 추천'
-    +'</p>';
+    +'<span style="font-size:11px;font-weight:400;color:var(--gray-600);margin-left:8px">'
+    +'밑거름 선택 후 자동 계산</span></p>';
   h+='<div id="topSection"><div class="top-prompt">👆 위 밑거름 5종 중 하나를 선택하면 웃거름 추천이 자동으로 계산됩니다.</div></div>';
   h+='</div>';
 
@@ -2340,7 +2232,7 @@ function printPrescription(){
     var baseBags=calcBags(r2(nBReq*fac),basePr.N).bags;
     var baseTotalKg=baseBags*20;
     var baseGm2=Math.round(baseTotalKg*1000/areaM2);
-    fertRows+='<tr><td class="fcat">밑거름 ('+( sN[0]||60)+'%)</td>'
+    fertRows+='<tr><td class="fcat">밑거름 ('+(sN[0]||60)+'%)</td>'
       +'<td class="fnm">'+baseNm+'</td>'
       +'<td>'+baseGm2+'</td>'
       +'<td>'+baseTotalKg+' kg</td>'
@@ -2393,7 +2285,7 @@ function printPrescription(){
   }
 
   var inner=
-    '<div class="p-btn-row" id="pBtnRow" style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:120px" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:120px;background:#2563EB" onclick="saveAsImage()">🖼️ 이미지 저장</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:120px;background:#FAE100;color:#3A1D1D" onclick="shareKakao()">💬 카카오 공유</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:120px;background:var(--green)" onclick="doPrint()">🖨️ 인쇄/PDF</button>'    +'</div>'
+    '<div class="p-btn-row" style="display:flex;gap:10px;margin-bottom:16px">'    +'<button class="p-close-btn" style="margin:0;flex:1" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;background:var(--green)" onclick="doPrint()">🖨️ 인쇄하기</button>'    +'</div>'
     +'<div class="p-hdr">'
       +'<div><div class="p-title">토양 비료 사용처방서</div>'
         +'<div class="p-sub">남해화학 정밀 시비처방 프로그램  ·  농촌진흥청 3차 개정 기준</div></div>'
@@ -2500,8 +2392,7 @@ function printPrescription(){
   var _t1={nm:'',bags:0}, _t2={nm:'',bags:0}, _t3={nm:'',bags:0};
 
   if(_isSlow2){
-    /* 완효성: 웃거름 없음 — 모두 빈값으로 저장 */
-    _t1={nm:'',bags:0}; _t2={nm:'',bags:0}; _t3={nm:'',bags:0};
+    _t1={nm:'',bags:0};_t2={nm:'',bags:0};_t3={nm:'',bags:0};
   } else {
     /* 일반: 회차별 개별 저장 */
     function _topInfo(roundIdx){
@@ -2525,9 +2416,9 @@ function printPrescription(){
     name:    document.getElementById('inName').value.trim(),
     phone:   document.getElementById('inPhone').value.trim(),
     farmAddress: (function(){
-        var a = document.getElementById('inAddress').value.trim();
-        var b = document.getElementById('inAddressDetail').value.trim();
-        return b ? a + ' ' + b : a;
+        var a=document.getElementById('inAddress').value.trim();
+        var b=document.getElementById('inAddressDetail').value.trim();
+        return b?a+' '+b:a;
       })(),
     crop:    cr.nm,
     area:    area,
@@ -2710,7 +2601,7 @@ function showFieldAlert(fieldId, msg){
 function checkConsentAndNext(){
   var name    =(document.getElementById('inName').value||'').trim();
   var phone   =(document.getElementById('inPhone').value||'').trim();
-  var address =((document.getElementById('inAddress').value||'')+(document.getElementById('inAddressDetail').value||'')).trim();
+  var address=((document.getElementById('inAddress').value||'')+(document.getElementById('inAddressDetail').value||'')).trim();
   var consent =document.getElementById('chkConsent').checked;
 
   if(!name){
