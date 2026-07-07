@@ -237,14 +237,16 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
   font-family: "Pretendard","맑은 고딕","Apple SD Gothic Neo",sans-serif;
 }
 #printArea .p-links-left { font-size: 15px; font-weight: 700; color: #1A4D8F; letter-spacing: -0.2px; }
-#printArea .p-links-right { display: flex; flex-direction: row; gap: 16px; align-items: center; flex-wrap: wrap; }
-#printArea .p-qr-item { display: flex; flex-direction: row; align-items: center; gap: 8px; flex: 1; min-width: 140px; }
+#printArea .p-links-right { display: flex; flex-direction: row; gap: 20px; align-items: flex-start; }
+/* 각 SNS 아이템: 아이콘+텍스트 위, QR 아래 세로 배치 */
+#printArea .p-qr-item { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+#printArea .p-qr-item a { display: flex; align-items: center; gap: 5px; }
 #printArea .p-qr-divider { width: 1px; background: #ddd; align-self: stretch; flex-shrink: 0; }
 #printArea .p-qr-icon { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; object-fit: cover; }
 #printArea .p-qr-text { font-size: 12px; color: #333; line-height: 1.4; font-weight: 600; letter-spacing: -0.2px; white-space: nowrap; }
 #printArea .p-qr-text b { display: inline; color: #1A4D8F; font-weight: 700; }
 #printArea a:hover .p-qr-text { text-decoration: underline; }
-#printArea .p-qr-item img.p-qr-code { width: 56px; height: 56px; border: 2px solid #ccc; border-radius: 6px; flex-shrink: 0; display: block; }
+#printArea .p-qr-item img.p-qr-code { width: 72px; height: 72px; border: 2px solid #ccc; border-radius: 6px; flex-shrink: 0; display: block; }
 
 #printArea .p-close-btn {
   display: block; margin: 0 auto 16px;
@@ -742,15 +744,6 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 <script>
 /* ── 모바일 인쇄 ── */
 function mobilePrint(){
-  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  if(isMobile){
-    /* 모바일: 공유 시트 또는 안내 */
-    if(navigator.share){
-      alert('📋 인쇄하기\n\n① 아래 [공유] 버튼 → [프린트] 선택\n또는\n② 브라우저 메뉴 → [공유] → [프린트]\n\n확인을 누르면 인쇄 화면으로 이동합니다.');
-    } else {
-      alert('📋 인쇄 / PDF 저장\n\n브라우저 메뉴(⋮ 또는 □↑) → [인쇄] 또는 [PDF로 저장]을 선택해주세요.\n\n확인을 누르면 인쇄 화면으로 이동합니다.');
-    }
-  }
   window.print();
 }
 
