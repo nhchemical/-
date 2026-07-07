@@ -323,10 +323,14 @@ function doLogin(){
   if(!pw){err.textContent='비밀번호를 입력해주세요.';return;}
   if(JISA_PW[jisa].toLowerCase()!==pw.toLowerCase()){err.textContent='비밀번호가 올바르지 않습니다.';return;}
   document.getElementById('loginScreen').style.display='none';
-  var sel=document.getElementById('selJisa');
-  sel.value=jisa;
-  sel.dispatchEvent(new Event('change'));
+  document.getElementById('selJisa').value=jisa;
   err.textContent='';
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      if(typeof onJisaChange==='function') onJisaChange();
+      else document.getElementById('selJisa').dispatchEvent(new Event('change'));
+    });
+  });
 }
 </script>
 <div id="loginScreen">
