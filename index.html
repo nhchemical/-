@@ -744,11 +744,24 @@ function saveAsImage(){
         win.document.write(
           '<html><head><title>처방서</title>'
           +'<meta name="viewport" content="width=device-width,initial-scale=1">'
-          +'<style>body{margin:0;background:#eee;display:flex;flex-direction:column;align-items:center;padding:16px;font-family:sans-serif}'
-          +'p{font-size:14px;color:#333;margin-bottom:12px;text-align:center}'
+          +'<style>'
+          +'body{margin:0;background:#f0f0f0;font-family:-apple-system,sans-serif;padding:16px}'
+          +'.top{background:#1A4D8F;color:#fff;border-radius:10px;padding:14px 16px;margin-bottom:12px;text-align:center}'
+          +'.top h3{margin:0 0 6px;font-size:16px}'
+          +'.top p{margin:0;font-size:12px;opacity:.85}'
+          +'.links{display:flex;gap:10px;margin-bottom:14px}'
+          +'.lbtn{flex:1;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-size:13px;font-weight:700}'
+          +'.kakao{background:#FAE100;color:#3A1D1D}'
+          +'.yt{background:#FF0000;color:#fff}'
           +'img{max-width:100%;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.2)}'
+          +'.hint{text-align:center;font-size:13px;color:#555;margin-bottom:10px}'
           +'</style></head><body>'
-          +'<p>📥 이미지를 <b>길게 눌러</b> 사진첩에 저장하세요</p>'
+          +'<div class="top"><h3>📥 처방서 저장 방법</h3><p>아래 이미지를 <b>길게 눌러</b> 사진첩에 저장 후<br>카카오톡으로 전송하세요</p></div>'
+          +'<div class="links">'
+          +'<a class="lbtn kakao" href="https://pf.kakao.com/_xiYvxhX" target="_blank">💬 카카오톡 채널</a>'
+          +'<a class="lbtn yt" href="https://www.youtube.com/@남해화학" target="_blank">▶ 유튜브 채널</a>'
+          +'</div>'
+          +'<p class="hint">⬇ 이미지를 길게 눌러 저장하세요</p>'
           +'<img src="'+canvas.toDataURL("image/png")+'">'
           +'</body></html>'
         );
@@ -763,6 +776,11 @@ function saveAsImage(){
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        /* 저장 후 카카오/유튜브 안내 */
+        setTimeout(function(){
+          if(confirm('✅ 이미지가 저장되었습니다!\n\n카카오톡으로 전송하시겠습니까?\n(확인 클릭 시 카카오톡 채널로 이동)'))
+            window.open('https://pf.kakao.com/_xiYvxhX','_blank');
+        }, 500);
       }
     }).catch(function(e){
       if(btn) btn.style.display='';
@@ -2300,7 +2318,7 @@ function printPrescription(){
   }
 
   var inner=
-    '<div class="p-btn-row" id="pBtnRow" style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:100px" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:100px;background:#2563EB" onclick="saveAsImage()">🖼️ 이미지 저장</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:100px;background:var(--green)" onclick="doPrint()">🖨️ 인쇄하기</button>'    +'</div>'
+    '<div class="p-btn-row" id="pBtnRow" style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:100px" onclick="closePrint()">← 돌아가기</button>'    +'<button class="p-close-btn" style="margin:0;flex:2;min-width:120px;background:#2563EB" onclick="saveAsImage()">🖼️ 이미지 저장 / 공유</button>'    +'<button class="p-close-btn" style="margin:0;flex:1;min-width:100px;background:var(--green)" onclick="window.print()">🖨️ 인쇄 / PDF</button>'    +'</div>'
     +'<div class="p-hdr">'
       +'<div><div class="p-title">토양 비료 사용처방서</div>'
         +'<div class="p-sub">남해화학 정밀 시비처방 프로그램  ·  농촌진흥청 3차 개정 기준</div></div>'
