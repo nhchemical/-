@@ -304,20 +304,6 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
 <body>
 
 <script>
-function onJisaChange(){
-  var jisa = document.getElementById('selJisa').value;
-  var regSel = document.getElementById('selRegion');
-  regSel.innerHTML = '<option value="">-- 지역 선택 --</option>';
-  document.getElementById('inCompany').value = '';
-  document.getElementById('inRep').value = '';
-  if(!jisa || !DEALERS[jisa]) return;
-  DEALERS[jisa].forEach(function(d){
-    var opt = document.createElement('option');
-    opt.value = d.r;
-    opt.textContent = d.r;
-    regSel.appendChild(opt);
-  });
-}
 var DEALERS = {
   "경인지사": [
     {r:"강화",c:"강화농약종묘사",p:"안영섭",s:"신원준",t:"031-837-6371"},
@@ -453,6 +439,24 @@ var JISA_PW = {
   "경남지사": "GN2608",
   "제주지사": "JJ2609"
 }
+function doLogin(){
+  var jisa=document.getElementById('loginJisa').value;
+
+function onJisaChange(){
+  var jisa = document.getElementById('selJisa').value;
+  var regSel = document.getElementById('selRegion');
+  regSel.innerHTML = '<option value="">-- 지역 선택 --</option>';
+  document.getElementById('inCompany').value = '';
+  document.getElementById('inRep').value = '';
+  if(!jisa || !DEALERS[jisa]) return;
+  DEALERS[jisa].forEach(function(d){
+    var opt = document.createElement('option');
+    opt.value = d.r;
+    opt.textContent = d.r;
+    regSel.appendChild(opt);
+  });
+}
+
 function doLogin(){
   var jisa=document.getElementById('loginJisa').value;
   var pw=document.getElementById('loginPw').value;
