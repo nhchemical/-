@@ -352,13 +352,10 @@ function doLogin(){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('selJisa').value=jisa;
   err.textContent='';
-  /* 메인 스크립트 로드 완료 후 실행 */
-  var _t=setInterval(function(){
-    if(typeof onJisaChange==='function'){
-      clearInterval(_t);
-      onJisaChange();
-    }
-  },50);
+  /* selJisa change 이벤트 발생 → onJisaChange 자동 호출 */
+  var _el=document.getElementById('selJisa');
+  var _ev=new Event('change');
+  _el.dispatchEvent(_ev);
 }
 </script>
 <div id="loginScreen">
