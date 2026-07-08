@@ -2310,7 +2310,8 @@ function printPrescription(){
       +'<td>'+_orgGm2+'</td><td>'+_orgTotalKg+' kg</td><td>'+_coAmtKg+' kg/10a</td></tr>';
   }
   var caRow='';
-  if(!(cr&&(cr.nm||'').includes('벼'))){
+  var _exCat=['곡류','서류'];
+  if(!(cr&&_exCat.indexOf(cr.cat)!==-1)){
     var _caBagsTotal=Math.ceil(7*area/10);
     var _caTotalKg=_caBagsTotal*20;
     var _caGm2=areaM2>0?Math.round(_caTotalKg*1000/areaM2):0;
