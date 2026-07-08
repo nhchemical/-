@@ -1877,10 +1877,13 @@ function makeBaseCards(list,nB,fac,baseRatio,n1){
   if(!list||!list.length) return '';
   var nBTotal=r2(nB*fac);
   var n1Total=n1?r2(n1*fac):nBTotal;
-  var h='<p class="card-title" style="display:flex;flex-direction:column;gap:2px">'
-    +'<span>Step 2 · 밑거름 추천 10종 &nbsp;<span id="baseRatioBadge" style="font-size:12px;font-weight:500;color:var(--gray-600)">(밑거름 '+(baseRatio||60)+'%)</span></span>'
-    +'<span id="baseHeaderInfo" style="font-size:11px;font-weight:400;color:var(--gray-600)">'
-    +'10a당 N요구량 '+nB+'kg → 전체 '+nBTotal+'kg &nbsp;|&nbsp; 카드를 선택하면 웃거름이 계산됩니다</span>'
+  var h='<p class="card-title" style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'
+    +'<span style="display:flex;flex-direction:column;gap:2px">'
+    +'<span>Step 2 · 밑거름 추천 10종</span>'
+    +'<span id="baseRatioBadge" style="font-size:12px;font-weight:500;color:var(--gray-600)">(밑거름 '+(baseRatio||60)+'%)</span>'
+    +'</span>'
+    +'<span id="baseHeaderInfo" style="font-size:11px;font-weight:400;color:var(--gray-600);text-align:right;white-space:nowrap">'
+    +'10a당 N요구량 '+nB+'kg → 전체 '+nBTotal+'kg<br>카드를 선택하면 웃거름이 계산됩니다</span>'
     +'</p>';
   var cards='';
   for(var i=0;i<list.length;i++){
@@ -1920,13 +1923,13 @@ function makeTopCards(list,nReq,fac,roundLabel,roundIdx){
   var _rlMatch=roundLabel.match(/^([^(]+)(\(.+\))?$/);
   var _rlMain=_rlMatch?_rlMatch[1].trim():roundLabel;
   var _rlSub=_rlMatch&&_rlMatch[2]?_rlMatch[2]:'';
-  var title='<p class="card-title" style="margin-top:14px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2px">'
-    +'<span style="display:flex;flex-direction:column;gap:1px">'
+  var title='<p class="card-title" style="margin-top:14px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'
+    +'<span style="display:flex;flex-direction:column;gap:2px">'
     +'<span>'+_rlMain+'</span>'
     +(_rlSub?'<span style="font-size:12px;font-weight:500;color:var(--gray-600)">'+_rlSub+'</span>':'')
     +'</span>'
-    +'<span style="font-size:11px;font-weight:400;color:var(--gray-600);text-align:right">'
-    +'10a당 N요구량 '+nReq+'kg<br>전체 '+nTotal+'kg 기준</span>'
+    +'<span style="font-size:11px;font-weight:400;color:var(--gray-600);text-align:right;white-space:nowrap">'
+    +'10a당 N요구량 '+nReq+'kg → 전체 '+nTotal+'kg<br>카드를 선택하면 웃거름이 계산됩니다</span>'
     +'</p>';
   var cards='';
   for(var i=0;i<list.length;i++){
