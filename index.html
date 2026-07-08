@@ -194,8 +194,8 @@ select{width:100%;font-size:13px;padding:8px 10px;border:1.5px solid var(--gray-
   font-size: 12px; border: 1px solid #aaa; text-align: center;
 }
 #printArea td { padding: 6px 10px; border: 1px solid #ccc; font-size: 12px; text-align: center; vertical-align: middle; }
-#printArea .fcat { font-weight: 700; background: #EFF6FF; font-size: 11px; width: 12%; }
-#printArea .fnm { text-align: left; font-weight: 600; }
+#printArea .fcat { font-weight: 700; background: #EFF6FF; font-size: 10px; width: 15%; vertical-align: middle; text-align: center; }
+#printArea .fnm { text-align: left; font-weight: 600; font-size: 10px; }
 #printArea .p-notice { font-size: 11px; color: #555; margin-top: 14px; line-height: 2; }
 #printArea .p-notice div::before { content: "* "; }
 #printArea .p-notice .p-contact { font-size: 12px; color: #0D2B4E; font-weight: 700; margin-top: 6px; padding: 5px 8px; background: #EEF3FA; border-left: 3px solid #0D2B4E; line-height: 1.8; }
@@ -732,13 +732,13 @@ function saveAsImage(){
       useCORS: true,
       backgroundColor: '#ffffff',
       logging: false,
-      windowWidth: el.scrollWidth,
+      windowWidth: 794,
       windowHeight: el.scrollHeight
     }).then(function(canvas){
       if(btn) btn.style.display='';
       var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if(isMobile){
-        /* 모바일: 새 탭에서 이미지 열기 → 길게 눌러 저장 */
+        /* 모바일: 세로(portrait) 비율로 새 탭에서 이미지 열기 */
         var win = window.open('','_blank');
         var imgSrc = canvas.toDataURL('image/png');
         win.document.write(
@@ -746,10 +746,10 @@ function saveAsImage(){
           +'<meta name="viewport" content="width=device-width,initial-scale=1">'
           +'<style>'
           +'*{box-sizing:border-box;margin:0;padding:0}'
-          +'body{background:#f5f5f5;font-family:-apple-system,sans-serif;padding:14px}'
-          +'.guide{background:#1A4D8F;color:#fff;border-radius:10px;padding:14px;margin-bottom:12px;text-align:center;font-size:14px;line-height:1.6}'
-          +'.guide b{font-size:16px;display:block;margin-bottom:4px}'
-          +'img{width:100%;border-radius:8px;box-shadow:0 2px 16px rgba(0,0,0,.15)}'
+          +'body{background:#f5f5f5;font-family:-apple-system,sans-serif;padding:12px;display:flex;flex-direction:column;align-items:center;}'
+          +'.guide{width:100%;max-width:500px;background:#1A4D8F;color:#fff;border-radius:10px;padding:12px;margin-bottom:10px;text-align:center;font-size:14px;line-height:1.6}'
+          +'.guide b{font-size:15px;display:block;margin-bottom:3px}'
+          +'img{width:100%;max-width:500px;border-radius:8px;box-shadow:0 2px 16px rgba(0,0,0,.15);display:block;}'
           +'</style></head><body>'
           +'<div class="guide"><b>📥 이미지 저장</b>아래 이미지를 <b>길게 눌러</b> 저장하세요</div>'
           +'<img src="'+imgSrc+'">'
@@ -2269,7 +2269,7 @@ function printPrescription(){
       var rBags=calcBags(r2(rnReq*fac),rPr.N).bags;
       var rTotalKg=rBags*20;
       var rGm2=Math.round(rTotalKg*1000/areaM2);
-      fertRows+='<tr><td class="fcat">웃거름 ('+topLabelsP[ri-1]+', '+rpct+'%)</td>'
+      fertRows+='<tr><td class="fcat">웃거름<br>('+topLabelsP[ri-1]+', '+rpct+'%)</td>'
         +'<td class="fnm">'+rNm+'</td>'
         +'<td>'+rGm2+'</td>'
         +'<td>'+rTotalKg+' kg</td>'
