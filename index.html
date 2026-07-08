@@ -35,8 +35,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:#F0F4F8;color:var(--gray-8
 .step.done{color:var(--green);background:var(--light-green)}
 /* 카드 */
 .card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
-.card-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--gray-100);display:flex;align-items:flex-start;gap:8px;text-align:left}
-.card-title::before{content:'';width:3px;min-height:16px;align-self:stretch;background:var(--green);border-radius:2px;flex-shrink:0}
+.card-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--gray-100);text-align:left;border-left:3px solid var(--green);padding-left:8px}
+.card-title::before{display:none}
 /* 그리드 */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
@@ -1877,13 +1877,18 @@ function makeBaseCards(list,nB,fac,baseRatio,n1){
   if(!list||!list.length) return '';
   var nBTotal=r2(nB*fac);
   var n1Total=n1?r2(n1*fac):nBTotal;
-  var h='<p class="card-title" style="justify-content:space-between;align-items:flex-start">'
+  var h='<p class="card-title">'
+    +'<span style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;width:100%">'
+    +'<span style="display:flex;align-items:flex-start;gap:8px">'
+    +'<span style="display:inline-block;width:3px;min-height:16px;background:var(--green);border-radius:2px;flex-shrink:0;margin-top:2px"></span>'
     +'<span style="display:flex;flex-direction:column;gap:2px">'
     +'<span>Step 2 · 밑거름 추천 10종</span>'
     +'<span id="baseRatioBadge" style="font-size:12px;font-weight:500;color:var(--gray-600)">(밑거름 '+(baseRatio||60)+'%)</span>'
     +'</span>'
-    +'<span id="baseHeaderInfo" style="font-size:11px;font-weight:400;color:var(--gray-600);text-align:right">'
+    +'</span>'
+    +'<span id="baseHeaderInfo" style="font-size:11px;font-weight:400;color:var(--gray-600);text-align:right;flex-shrink:0">'
     +'10a당 N요구량 '+nB+'kg → 전체 '+nBTotal+'kg<br>카드를 선택하면 웃거름이 계산됩니다</span>'
+    +'</span>'
     +'</p>';
   var cards='';
   for(var i=0;i<list.length;i++){
@@ -1923,13 +1928,18 @@ function makeTopCards(list,nReq,fac,roundLabel,roundIdx){
   var _rlMatch=roundLabel.match(/^([^(]+)(\(.+\))?$/);
   var _rlMain=_rlMatch?_rlMatch[1].trim():roundLabel;
   var _rlSub=_rlMatch&&_rlMatch[2]?_rlMatch[2]:'';
-  var title='<p class="card-title" style="margin-top:14px;justify-content:space-between;align-items:flex-start">'
+  var title='<p class="card-title" style="margin-top:14px">'
+    +'<span style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;width:100%">'
+    +'<span style="display:flex;align-items:flex-start;gap:8px">'
+    +'<span style="display:inline-block;width:3px;min-height:16px;background:var(--green);border-radius:2px;flex-shrink:0;margin-top:2px"></span>'
     +'<span style="display:flex;flex-direction:column;gap:2px">'
     +'<span>'+_rlMain+'</span>'
     +(_rlSub?'<span style="font-size:12px;font-weight:500;color:var(--gray-600)">'+_rlSub+'</span>':'')
     +'</span>'
-    +'<span style="font-size:11px;font-weight:400;color:var(--gray-600);text-align:right">'
+    +'</span>'
+    +'<span style="font-size:11px;font-weight:400;color:var(--gray-600);text-align:right;flex-shrink:0">'
     +'10a당 N요구량 '+nReq+'kg → 전체 '+nTotal+'kg<br>카드를 선택하면 웃거름이 계산됩니다</span>'
+    +'</span>'
     +'</p>';
   var cards='';
   for(var i=0;i<list.length;i++){
@@ -2183,9 +2193,14 @@ function runCalc(){
 
   /* 웃거름 (밑거름 선택 후 채워짐) */
   h+='<div class="card">';
-  h+='<p class="card-title">Step 3 · 웃거름 추천'
-    +'<span style="font-size:11px;font-weight:400;color:var(--gray-600);margin-left:8px">'
-    +'밑거름 선택 후 자동 계산</span></p>';
+  h+='<p class="card-title">'
+    +'<span style="display:flex;align-items:center;gap:8px">'
+    +'<span style="display:inline-block;width:3px;height:16px;background:var(--green);border-radius:2px;flex-shrink:0"></span>'
+    +'<span>Step 3 · 웃거름 추천'
+    +'<span style="font-size:11px;font-weight:400;color:var(--gray-600);margin-left:8px">밑거름 선택 후 자동 계산</span>'
+    +'</span>'
+    +'</span>'
+    +'</p>';
   h+='<div id="topSection"><div class="top-prompt">👆 위 밑거름 5종 중 하나를 선택하면 웃거름 추천이 자동으로 계산됩니다.</div></div>';
   h+='</div>';
 
