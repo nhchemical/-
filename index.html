@@ -1877,9 +1877,11 @@ function makeBaseCards(list,nB,fac,baseRatio,n1){
   if(!list||!list.length) return '';
   var nBTotal=r2(nB*fac);
   var n1Total=n1?r2(n1*fac):nBTotal;
-  var h='<p class="card-title">Step 2 · 밑거름 추천 10종 <span id="baseRatioBadge">(밑거름 '+(baseRatio||60)+'%)</span>'
-    +'<span id="baseHeaderInfo" style="font-size:11px;font-weight:400;color:var(--gray-600);margin-left:8px">'
-    +'10a당 N요구량 '+nB+'kg → 전체 '+nBTotal+'kg &nbsp;|&nbsp; 카드를 선택하면 웃거름이 계산됩니다</span></p>';
+  var h='<p class="card-title" style="display:flex;flex-direction:column;gap:2px">'
+    +'<span>Step 2 · 밑거름 추천 10종 &nbsp;<span id="baseRatioBadge" style="font-size:12px;font-weight:500;color:var(--gray-600)">(밑거름 '+(baseRatio||60)+'%)</span></span>'
+    +'<span id="baseHeaderInfo" style="font-size:11px;font-weight:400;color:var(--gray-600)">'
+    +'10a당 N요구량 '+nB+'kg → 전체 '+nBTotal+'kg &nbsp;|&nbsp; 카드를 선택하면 웃거름이 계산됩니다</span>'
+    +'</p>';
   var cards='';
   for(var i=0;i<list.length;i++){
     var nm=list[i],pr=PRODUCTS[nm];
@@ -1889,7 +1891,8 @@ function makeBaseCards(list,nB,fac,baseRatio,n1){
     var total=calcBags(nBTotalUse,pr.N);
     var aN10Total=r2(total.bags*20*(pr.N/100));
     var tc=pr.t==='완효성'?'t-slow':'t-base';
-    var det=pr.N<=0?'칼리·보조 단비':pr.t==='완효성'?'전체 '+total.bags+'포 투입 → 실투입N 전체 '+aN10Total+'kg':'밑거름 '+total.bags+'포 투입 → 실투입N 전체 '+r2(total.bags*20*(pr.N/100))+'kg';
+    var aNAll=r2(total.bags*20*(pr.N/100));
+    var det=pr.N<=0?'칼리·보조 단비':'실투입N 전체 '+aNAll+'kg';
     var slowHint='';
     cards+='<div class="pcrd'+(i===0?' best':'')+'" id="bc-'+nm+'" onclick="selectBase(&apos;'+nm+'&apos;)">'
       +'<div class="rnk'+(i===0?' r1':'')+'">'+( i===0?'★':(i+1))+'</div>'
@@ -1898,7 +1901,8 @@ function makeBaseCards(list,nB,fac,baseRatio,n1){
         +'<div class="pinf">N <span class="n-val" style="font-weight:700">'+pr.N+'%</span>'
           +' &nbsp;P₂O₅ <span class="p-val" style="font-weight:700">'+pr.P+'%</span>'
           +' &nbsp;K₂O <span class="k-val" style="font-weight:700">'+pr.K+'%</span>'
-          +' &nbsp;·&nbsp;'+det+'</div>'
+          +(det?'<br><span style="font-size:11px;color:#6B7280">'+det+'</span>':'')
+          +'</div>'
       +'</div>'
       +'<div class="bagbox">'
         +'<span class="bagn">'+total.bags+'</span>'
@@ -1922,7 +1926,7 @@ function makeTopCards(list,nReq,fac,roundLabel,roundIdx){
     var total=calcBags(nTotal,pr.N);
     var aNTotal=r2(total.bags*20*(pr.N/100));
     var roundNum=roundIdx===1?'1차':roundIdx===2?'2차':'3차';
-    var det=pr.N>0?(roundNum+'추비 '+total.bags+'포 투입 → 실투입N 전체 '+aNTotal+'kg'):'칼리·보조 단비';
+    var det=pr.N>0?('실투입N 전체 '+aNTotal+'kg'):'칼리·보조 단비';
     var uid='tc'+roundIdx+'-'+nm;
     cards+='<div class="pcrd'+(i===0?' best':'')+'" id="'+uid+'" onclick="selectTop(&apos;'+nm+'&apos;,'+roundIdx+')">'
       +'<div class="rnk'+(i===0?' r1':'')+'">'+( i===0?'★':(i+1))+'</div>'
@@ -1931,7 +1935,8 @@ function makeTopCards(list,nReq,fac,roundLabel,roundIdx){
         +'<div class="pinf">N <span class="n-val" style="font-weight:700">'+pr.N+'%</span>'
           +' &nbsp;P₂O₅ <span class="p-val" style="font-weight:700">'+pr.P+'%</span>'
           +' &nbsp;K₂O <span class="k-val" style="font-weight:700">'+pr.K+'%</span>'
-          +' &nbsp;·&nbsp;'+det+'</div>'
+          +(det?'<br><span style="font-size:11px;color:#6B7280">'+det+'</span>':'')
+          +'</div>'
       +'</div>'
       +'<div class="bagbox">'
         +'<span class="bagn">'+total.bags+'</span>'
