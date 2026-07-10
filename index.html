@@ -985,7 +985,7 @@ function loadAchievement(jisa, region){
   content.className = 'ach-loading';
   content.innerHTML = '⏳ 실적 조회 중...';
 
-  var TARGET = 50;
+  var TARGET = (jisa === '제주지사') ? 200 : 50;
   var url = SHEET_URL + '?action=count'
     + '&jisa='   + encodeURIComponent(jisa)
     + '&region=' + encodeURIComponent(region);
